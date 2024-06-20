@@ -1,11 +1,21 @@
-FROM python:3.12
+FROM ubuntu:24.04
 
-WORKDIR /usr/src/app
+ARG SSH_PUBLIC_KEY
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+# Install openssh-server
+RUN apt update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install openssh-server -y
 
-COPY runner.py ./
+# Create .ssh directory
+RUN mkdir -p ~/.ssh
+RUN cd ~/.ssh
+RUN chmod 700 ~/.ssh
 
-CMD ["--bind-all"]
-ENTRYPOINT ["python", "-m", "runner"]
+# Add public key to authorized_keys
+RUN echo $SSH_PUBLIC_KEY >> ~/.ssh/authorized_keys
+RUN chmod 700 ~/.ssh/authorized_keys
+
+# Start ssh service
+ENTRYPOINT ["sh", "-c", "service ssh start; sleep infinity"]
+# ENTRYPOINT ["sh", "-c", "sleep infinity"]
+# ENTRYPOINT ["sh"]
