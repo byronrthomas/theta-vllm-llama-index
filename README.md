@@ -40,3 +40,5 @@ docker stop theta-container-trial; && docker run -d -p 1022:22 --rm --name theta
 docker build -t byronthomas712/trial-container:2.0 -f Dockerfile --build-arg SSH_PUBLIC_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYUnKSFuRmpvjjkWDeb0+/2q7qloJsIWosfO/xc6zhQ byron.thomas@gmail.com" .
 
 ssh -p 1022 -i ~/.ssh/id_ed25519 root@localhost
+
+docker build -t byronthomas712/trial-container:2.1-dev -f Dockerfile.dev

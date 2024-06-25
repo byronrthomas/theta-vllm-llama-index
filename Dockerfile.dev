@@ -1,0 +1,6 @@
+FROM byronthomas712/trial-container:2.1
+
+RUN bash -c "source ~/.profile && pip install 'pytest~=8.2.2'"
+
+# Start ssh service
+ENTRYPOINT ["sh", "-c", "service ssh start; sleep infinity"]
