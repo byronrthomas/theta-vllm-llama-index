@@ -38,7 +38,8 @@ RUN bash -c "source ~/.profile && pip install 'Flask-Cors~=4.0.1'"
 RUN bash -c "source ~/.profile && pip install 'llama-index~=0.10.44'"
 RUN bash -c "source ~/.profile && pip install 'python-dotenv~=0.19'"
 RUN bash -c "source ~/.profile && pip install 'vllm~=0.5.0.post1'"
-
+RUN bash -c "source ~/.profile && pip install 'llama-index-embeddings-huggingface~=0.2.2'"
+RUN bash -c "source ~/.profile && pip install 'llama-index-llms-vllm~=0.1.8'"
 
 
 # Add public key to authorized_keys
