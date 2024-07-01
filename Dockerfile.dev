@@ -1,4 +1,4 @@
-FROM byronthomas712/trial-container:2.1
+FROM byronthomas712/trial-container:2.2
 
 RUN bash -c "source ~/.profile && pip install 'pytest~=8.2.2'"
 
