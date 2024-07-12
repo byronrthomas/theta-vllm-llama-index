@@ -1,4 +1,6 @@
-FROM byronthomas712/trial-container:2.2
+# Use a build argument to specify the base image tag
+ARG BASE_IMAGE_TAG=latest
+FROM byronthomas712/trial-container:${BASE_IMAGE_TAG}
 
 RUN bash -c "source ~/.profile && pip install 'pytest~=8.2.2'"
 

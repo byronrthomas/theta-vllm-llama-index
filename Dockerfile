@@ -41,6 +41,7 @@ RUN bash -c "source ~/.profile && pip install 'vllm~=0.5.0.post1'"
 RUN bash -c "source ~/.profile && pip install 'llama-index-embeddings-huggingface~=0.2.2'"
 RUN bash -c "source ~/.profile && pip install 'llama-index-llms-vllm~=0.1.8'"
 RUN bash -c "source ~/.profile && pip install 'fastapi~=0.111.0'"
+RUN bash -c "source ~/.profile && pip install 'flask[async]~= 3.0.3'"
 
 
 # Add public key to authorized_keys

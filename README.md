@@ -34,11 +34,11 @@ everything else in volume / git
 ## Useful commands
 
 ```
-docker stop theta-container-trial; && docker run -d -p 1022:22 --rm --name theta-container-trial byronthomas712/trial-container:2.0
+docker stop theta-container-trial; docker run -d -p 1022:22 --rm --name theta-container-trial byronthomas712/trial-container:2.0
 ```
 
-docker build -t byronthomas712/trial-container:2.2 -f Dockerfile --build-arg SSH_PUBLIC_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYUnKSFuRmpvjjkWDeb0+/2q7qloJsIWosfO/xc6zhQ byron.thomas@gmail.com" .
+docker build -t byronthomas712/trial-container:2.3 -f Dockerfile --build-arg SSH_PUBLIC_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYUnKSFuRmpvjjkWDeb0+/2q7qloJsIWosfO/xc6zhQ byron.thomas@gmail.com" .
 
 ssh -p 1022 -i ~/.ssh/id_ed25519 root@localhost
 
-docker build -t byronthomas712/trial-container:2.2-dev -f Dockerfile.dev .
+docker build --build-arg BASE_IMAGE_TAG=2.3 -t byronthomas712/trial-container:2.3-dev -f Dockerfile.dev .
