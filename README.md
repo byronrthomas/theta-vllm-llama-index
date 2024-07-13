@@ -37,8 +37,13 @@ everything else in volume / git
 docker stop theta-container-trial; docker run -d -p 1022:22 --rm --name theta-container-trial byronthomas712/trial-container:2.0
 ```
 
-docker build -t byronthomas712/trial-container:2.3 -f Dockerfile --build-arg SSH_PUBLIC_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYUnKSFuRmpvjjkWDeb0+/2q7qloJsIWosfO/xc6zhQ byron.thomas@gmail.com" .
+export TCT_TAG=2.4
+
+docker build -t "byronthomas712/trial-container:$TCT_TAG" -f Dockerfile --build-arg SSH_PUBLIC_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYUnKSFuRmpvjjkWDeb0+/2q7qloJsIWosfO/xc6zhQ byron.thomas@gmail.com" .
 
 ssh -p 1022 -i ~/.ssh/id_ed25519 root@localhost
 
-docker build --build-arg BASE_IMAGE_TAG=2.3 -t byronthomas712/trial-container:2.3-dev -f Dockerfile.dev .
+docker build --build-arg BASE_IMAGE_TAG=$TCT_TAG -t "byronthomas712/trial-container:$TCT_TAG-dev" -f Dockerfile.dev .
+
+
+docker push "byronthomas712/trial-container:$TCT_TAG-dev"

@@ -37,12 +37,16 @@ RUN bash -c "source ~/.profile && pip install 'Flask~=3.0.3'"
 RUN bash -c "source ~/.profile && pip install 'Flask-Cors~=4.0.1'"
 RUN bash -c "source ~/.profile && pip install 'llama-index~=0.10.44'"
 RUN bash -c "source ~/.profile && pip install 'python-dotenv~=0.19'"
-RUN bash -c "source ~/.profile && pip install 'vllm~=0.5.0.post1'"
+# Must have this specific version of vllm since we monkey-patch it
+RUN bash -c "source ~/.profile && pip install 'vllm==0.5.0.post1'"
 RUN bash -c "source ~/.profile && pip install 'llama-index-embeddings-huggingface~=0.2.2'"
 RUN bash -c "source ~/.profile && pip install 'llama-index-llms-vllm~=0.1.8'"
 RUN bash -c "source ~/.profile && pip install 'fastapi~=0.111.0'"
 RUN bash -c "source ~/.profile && pip install 'flask[async]~= 3.0.3'"
 
+# Monkey patch in a couple of VLLM files
+COPY --chown=root:root ./vllm_patches/vllm/worker/worker.py /root/.pyenv/versions/3.11.8/envs/py-311-env/lib/python3.11/site-packages/vllm/worker/
+COPY --chown=root:root ./vllm_patches/vllm/executor/multiproc_gpu_executor.py /root/.pyenv/versions/3.11.8/envs/py-311-env/lib/python3.11/site-packages/vllm/executor/
 
 # Add public key to authorized_keys
 RUN echo $SSH_PUBLIC_KEY >> ~/.ssh/authorized_keys
