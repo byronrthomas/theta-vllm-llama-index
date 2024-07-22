@@ -1,49 +1,24 @@
-# Trial container
+# Theta VLLM Llama-Index container stack
 
-## Build a new tag
+This is a set of Dockerfiles that handles building a base stack to build on top of for a GPU-cloud like
+Theta EdgeCloud. It contains:
 
-```
-docker build -t byronthomas712/trial-container:0.1 .
-```
+* Ubuntu
+* pyEnv
+* Python 3.10 - set using pyEnv to be the global python version
+* Flask & Fastapi - two choices for using a webserver
+* vLLM - a local LLM management framework with multi-processor support
+* Llama Index - a framework wrapping up LLMs with RAG and Agent features
 
-## Run from tag
+## Dev container
 
-```
-docker run -d -p 5000:5000 --rm --name theta-container-trial byronthomas712/trial-container:0.1 --bind-all
-```
+There is also a dev Dockerfile that adds pytest
 
-## Storage inside containers
-
-Typically mounted at /workspace
-
-- So make sure anything else FROM A CONTAINER gets put into /usr/app or whatever..
-- Need to think how this plays with the Theta kind of containers, but can save this for later
-
-## Pyenv inside containers
-
-NOTE: although the working dir can define which env to point to, without further finagling the envs themselves
-will be in the non-mounted part of the container (because they will be in e.g. `/root/.pyenv/versions`).
-So it is better generally to stick python deps in the container build step, as installing them from the mounted
-workspace dir will tend to have more work to do.
-
-## Next steps
-
-Current plan is to develop things on a public docker repo, by only having dependencies in that container and keeping
-everything else in volume / git
-
-## Useful commands
+## Build new tag - for both containers
 
 ```
-docker stop theta-container-trial; docker run -d -p 1022:22 --rm --name theta-container-trial byronthomas712/trial-container:2.0
+export TVLI_TAG=1.1
+docker build -t "byronthomas712/theta-vllm-llama-index:$TVLI_TAG" -f Dockerfile  .
+docker build --build-arg BASE_IMAGE_TAG=$TVLI_TAG -t "byronthomas712/theta-vllm-llama-index:$TVLI_TAG-dev" -f Dockerfile.dev .
 ```
 
-export TCT_TAG=2.4
-
-docker build -t "byronthomas712/trial-container:$TCT_TAG" -f Dockerfile --build-arg SSH_PUBLIC_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYUnKSFuRmpvjjkWDeb0+/2q7qloJsIWosfO/xc6zhQ byron.thomas@gmail.com" .
-
-ssh -p 1022 -i ~/.ssh/id_ed25519 root@localhost
-
-docker build --build-arg BASE_IMAGE_TAG=$TCT_TAG -t "byronthomas712/trial-container:$TCT_TAG-dev" -f Dockerfile.dev .
-
-
-docker push "byronthomas712/trial-container:$TCT_TAG-dev"
