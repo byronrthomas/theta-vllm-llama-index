@@ -5,7 +5,7 @@ Theta EdgeCloud. It contains:
 
 * Ubuntu
 * pyEnv
-* Python 3.10 - set using pyEnv to be the global python version
+* Python 3.11.8 - set using pyEnv to be the global python version
 * Flask & Fastapi - two choices for using a webserver
 * vLLM - a local LLM management framework with multi-processor support
 * Llama Index - a framework wrapping up LLMs with RAG and Agent features
